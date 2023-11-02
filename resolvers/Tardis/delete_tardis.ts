@@ -40,12 +40,13 @@ const delete_tardis = async (req: Request, res: Response) => { // async es para 
       await Promise.all(dimensionesIds.map(async (dimensionId) => {
         const dimension = await DimensionModel.findByIdAndDelete(dimensionId).exec();
         
-        if(dimension.id_planetas !== null){
+        if(dimension && dimension.id_planetas !== null){
         const planetasIds = dimension.id_planetas;
           await Promise.all(planetasIds.map(async (planetaId) => {
             // Obten los IDs de las personas relacionadas con el planeta
             const planeta = await PlanetaModel.findByIdAndDelete(planetaId).exec();
-            if(planeta.id_personas !== null){
+            
+            if(planeta && planeta.id_personas !== null ){
               const personasIds = planeta.id_personas;
               // Itera a través de los IDs de las personas y elimina cada una
               await Promise.all(personasIds.map(async (personaId) => {

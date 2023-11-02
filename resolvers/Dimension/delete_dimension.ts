@@ -41,7 +41,7 @@ const delete_dimension = async (req: Request, res: Response) => { // async es pa
         // Obten los IDs de las personas relacionadas con el planeta
         const planeta = await PlanetaModel.findByIdAndDelete(planetaId).exec();
         
-        if(planeta.id_personas !== null){
+        if(planeta && planeta.id_personas !== null){
           const personasIds = planeta.id_personas;
           await Promise.all(personasIds.map(async (personaId) => {
             await PersonaModel.findByIdAndDelete(personaId).exec();
