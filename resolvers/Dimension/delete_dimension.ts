@@ -33,19 +33,21 @@ const delete_dimension = async (req: Request, res: Response) => { // async es pa
     // Obtengo los IDs de los planetas relacionados con la dimension
     const planetasIds = dimension.id_planetas;
 
+    if(planetasIds.length !== 0){
     // Espero a que todo se borre antes de continuar
     // https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Promise/all
-    await Promise.all(planetasIds.map(async (planetaId) => {
-      // Obten los IDs de las personas relacionadas con el planeta
-      const planeta = await PlanetaModel.findByIdAndDelete(planetaId).exec();
-      const personasIds = planeta.id_personas;
-    
-      // Itera a través de los IDs de las personas y elimina cada una
-      await Promise.all(personasIds.map(async (personaId) => {
-        await PersonaModel.findByIdAndDelete(personaId).exec();
+      await Promise.all(planetasIds.map(async (planetaId) => {
+        // Obten los IDs de las personas relacionadas con el planeta
+        const planeta = await PlanetaModel.findByIdAndDelete(planetaId).exec();
+        const personasIds = planeta.id_personas;
+      
+          if(personasIds.length !== 0){
+            await Promise.all(personasIds.map(async (personaId) => {
+              await PersonaModel.findByIdAndDelete(personaId).exec();
+            }));
+          }
       }));
-    }));
-
+    }
     res.status(200).send("dimension, planetas and the personas asociated with the dimension "+id+"deleted"); // Si se ha borrado correctamente, devuelvo un mensaje de que se ha borrado correctamente
 
     } catch (error) {

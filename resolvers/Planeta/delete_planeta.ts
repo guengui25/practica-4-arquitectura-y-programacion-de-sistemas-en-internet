@@ -31,13 +31,12 @@ const delete_planeta = async (req: Request, res: Response) => { // async es para
     // Obtengo los IDs de las personas relacionadas con el planeta
     const personasIds = planeta.id_personas;
 
+    if(personasIds.length !== 0){
     // Borro las personas relacionadas con el planeta
     await personasIds.forEach(async (personaId) => {
       await PersonaModel.findByIdAndDelete(personaId).exec();
     });
-
-    // Eliminamos el planeta después de eliminar las personas relacionadas
-    await PlanetaModel.findByIdAndDelete(id).exec();
+   }
 
     res.status(200).send("planeta and the personas asociated with planeta ",id,"deleted"); // Si se ha borrado correctamente, devuelvo un mensaje de que se ha borrado correctamente
 
