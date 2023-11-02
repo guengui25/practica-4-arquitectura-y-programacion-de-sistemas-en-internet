@@ -7,9 +7,33 @@
 
 import { Request, Response } from "npm:express@4.18.2"; // importo los tipos de express Request y Response
 
+import TardisModel from "../db/tardis.ts";  // Importo el modelo de la base de datos
+import DimensionesModel from "../db/dimension.ts";
+import PlanetasModel from "../db/planeta.ts";
+import PersonasModel from "../db/persona.ts";
+
 const get_inicio = async (req: Request, res: Response) => { // async es para que la funcion sea asincrona
   
     try {
+        const json_tardis = {
+            title: "Tardis Data",
+            data: await TardisModel.find().populate({path:"id_dimensiones",populate:{path:"id_planetas",populate:{path:"id_personas"}}}).exec()
+        };
+
+        const json_dimensiones = {
+            title: "Dimensiones Data",
+            data: await DimensionesModel.find().populate({path:"id_planetas",populate:{path:"id_personas"}}).exec()
+        };
+
+        const json_planetas = {
+            title: "Planetas Data",
+            data: await PlanetasModel.find().populate({path:"id_personas"}).exec()
+        };
+
+        const json_personas = {
+            title: "Personas Data",
+            data: await PersonasModel.find().exec()
+        };
 
     const html = `
     <!DOCTYPE html>
@@ -17,7 +41,7 @@ const get_inicio = async (req: Request, res: Response) => { // async es para que
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Página de Inicio</title>
+        <title>Pr4-DoctorWho - Riego</title>
         <style>
             body {
                 font-family: Arial, sans-serif;
@@ -32,12 +56,29 @@ const get_inicio = async (req: Request, res: Response) => { // async es para que
                 margin: 20px auto;
                 width: 80%;
             }
+            pre {
+                background-color: #f5f5f5;
+                padding: 10px;
+                border: 1px solid #ddd;
+            }
         </style>
     </head>
     <body>
         <div class="container">
             <h1>API DOCTOR WHO - PRÁCTICA 4</h1>
             <p>Desarrollado por Alejandro Riego V.</p>
+            <p>Consultar <a href="https://github.com/guengui25/practica-4-arquitectura-y-programacion-de-sistemas-en-internet" target="_blank">repositorio en GitHub</a></p>
+            <h2>${json_tardis.title}</h2>
+            <pre>${JSON.stringify(json_tardis.data, null, 2)}</pre>
+
+            <h2>${json_dimensiones.title}</h2>
+            <pre>${JSON.stringify(json_dimensiones.data, null, 2)}</pre>
+
+            <h2>${json_planetas.title}</h2>
+            <pre>${JSON.stringify(json_planetas.data, null, 2)}</pre>
+
+            <h2>${json_personas.title}</h2>
+            <pre>${JSON.stringify(json_personas.data, null, 2)}</pre>
         </div>
     </body>
     </html>
