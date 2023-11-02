@@ -38,7 +38,7 @@ const delete_planeta = async (req: Request, res: Response) => { // async es para
       });
    }
 
-    res.status(200).send("planeta and the personas asociated with planeta ",id,"deleted"); // Si se ha borrado correctamente, devuelvo un mensaje de que se ha borrado correctamente
+    res.status(200).send("planeta and the personas asociated with planeta ",{id},"deleted"); // Si se ha borrado correctamente, devuelvo un mensaje de que se ha borrado correctamente
 
     } catch (error) {
 

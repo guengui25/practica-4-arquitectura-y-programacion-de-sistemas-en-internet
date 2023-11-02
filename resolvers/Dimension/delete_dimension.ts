@@ -51,7 +51,7 @@ const delete_dimension = async (req: Request, res: Response) => { // async es pa
       }));
     }
 
-    res.status(200).send("dimension, planetas and the personas asociated with the dimension "+id+"deleted"); // Si se ha borrado correctamente, devuelvo un mensaje de que se ha borrado correctamente
+    res.status(200).send("dimension, planetas and the personas asociated with the dimension ",{id},"deleted"); // Si se ha borrado correctamente, devuelvo un mensaje de que se ha borrado correctamente
 
     } catch (error) {
 

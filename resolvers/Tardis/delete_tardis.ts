@@ -62,7 +62,7 @@ const delete_tardis = async (req: Request, res: Response) => { // async es para 
 
 
 
-    res.status(200).send("tardis,dimensiones, planetas and the personas asociated with the tardis "+id+"deleted"); // Si se ha borrado correctamente, devuelvo un mensaje de que se ha borrado correctamente
+    res.status(200).send("tardis,dimensiones, planetas and the personas asociated with the tardis ",{id},"deleted"); // Si se ha borrado correctamente, devuelvo un mensaje de que se ha borrado correctamente
 
     } catch (error) {
 
