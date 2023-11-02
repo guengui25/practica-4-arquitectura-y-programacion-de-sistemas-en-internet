@@ -97,7 +97,7 @@ import get_dimension from "./resolvers/Dimension/get_dimension.ts";
 
 import post_dimension from "./resolvers/Dimension/post_dimension.ts";
 
-import put_dimension from "./resolvers/Dimension/put_dimension.txt";
+import put_dimension from "./resolvers/Dimension/put_dimension.ts";
 
 import delete_dimension from "./resolvers/Dimension/delete_dimension.ts";
 
