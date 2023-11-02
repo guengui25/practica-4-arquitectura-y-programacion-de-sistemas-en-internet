@@ -18,8 +18,10 @@ const get_planeta = async (req: Request, res: Response) => { // async es para qu
   
     try {
     const { id } = req.params; // Obtengo el dni de los parametros de la peticion
+    
+    //https://mongoosejs.com/docs/populate.html -> Utilizo populate de Mongo para obtener los datos de las personas del planeta
 
-    const planeta = await PlanetaModel.findById(id).populate(Personas).exec(); // Busco el id de X en la base de datos
+    const planeta = await PlanetaModel.findById(id).populate("id_personas").exec(); // Busco el id de X en la base de datos
 
     if (!planeta) { // Si no existe X con ese dni, devuelvo un error
 
@@ -30,7 +32,12 @@ const get_planeta = async (req: Request, res: Response) => { // async es para qu
 
     res.status(200).send({ // Si existe X con ese dni, devuelvo X
       id: planeta._id.toString(),
-      personas: planeta.personas 
+      personas: planeta.id_personas.map(persona => {
+        return {
+          id: persona._id.toString(),
+          nombre: persona.nombre
+        }
+      })
     });
 
     } catch (error) {

@@ -4,17 +4,17 @@ export type Tardis = {
   camuflaje: string;
   numero_regeneracion: number;
   ano: number;
-  dimensiones: Dimension[];
+  id_dimensiones: Dimension[];
 }
 
 export type Dimension = {
   id: string;
-  planetas: Planeta[];
+  id_planetas: Planeta[];
 };
 
 export type Planeta = {
   id: string;
-  personas: Persona[];
+  id_personas: Persona[];
 };
 
 export type Persona = {

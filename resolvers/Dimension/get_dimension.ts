@@ -19,7 +19,8 @@ const get_dimension = async (req: Request, res: Response) => { // async es para 
     try {
     const { id } = req.params; // Obtengo el dni de los parametros de la peticion
 
-    const dimension = await DimensionModel.findById(id).populate(Planetas).exec(); // Busco el id de X en la base de datos
+    //https://mongoosejs.com/docs/populate.html -> Utilizo populate de Mongo para obtener los datos de las personas de la dimension
+    const dimension = await DimensionModel.findById(id).populate({path:"id_planetas",populate:("id_personas")}).exec(); // Busco el id de X en la base de datos
 
     if (!dimension) { // Si no existe X con ese dni, devuelvo un error
 
@@ -30,7 +31,17 @@ const get_dimension = async (req: Request, res: Response) => { // async es para 
 
     res.status(200).send({ // Si existe X con ese dni, devuelvo X
       id: dimension._id.toString(),
-      planetas: dimension.planetas 
+      planetas: dimension.id_planetas.map(planeta => { 
+        return {
+          id: planeta._id.toString(),
+          personas: planeta.id_personas.map(persona => {
+            return {
+              id: persona._id.toString(),
+              nombre: persona.nombre,
+            }
+          })
+        }
+      })
     });
 
     } catch (error) {

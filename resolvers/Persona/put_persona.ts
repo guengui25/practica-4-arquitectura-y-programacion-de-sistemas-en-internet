@@ -27,7 +27,7 @@ const put_persona = async (req: Request, res: Response) => {
     }
 
     const updatedPersona = await PersonaModel.findByIdAndUpdate( // Actualizo la persona con el dni dado
-      { id } , // Busco la persona con el dni dado
+      id , // Busco la persona con el dni dado
 
       { nombre }, // Actualizo los datos de la persona con los datos del body de la peticion
 

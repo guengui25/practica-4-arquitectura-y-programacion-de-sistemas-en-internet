@@ -18,8 +18,9 @@ const get_tardis = async (req: Request, res: Response) => { // async es para que
   
     try {
     const { id } = req.params; // Obtengo el dni de los parametros de la peticion
-
-    const tardis = await TardisModel.findById(id).populate(Dimensiones).exec(); // Busco el id de X en la base de datos
+    
+    //https://mongoosejs.com/docs/populate.html -> Utilizo populate de Mongo para obtener los datos de las personas de la dimension
+    const tardis = await TardisModel.findById(id).populate({path:"id_dimensiones",populate:{path:"id_planetas",populate:{path:"id_personas"}}}).exec(); // Busco el id de X en la base de datos
 
     if (!tardis) { // Si no existe X con ese dni, devuelvo un error
 
@@ -32,7 +33,22 @@ const get_tardis = async (req: Request, res: Response) => { // async es para que
       id: tardis._id.toString(),
       camuflaje: tardis.camuflaje,
       ano: tardis.ano,
-      dimensiones: tardis.dimensiones 
+      dimensiones: tardis.id_dimensiones.map(dimension => {
+        return {
+          id: dimension._id.toString(),
+          planetas: dimension.id_planetas.map(planeta => { 
+            return {
+              id: planeta._id.toString(),
+              personas: planeta.id_personas.map(persona => {
+                return {
+                  id: persona._id.toString(),
+                  nombre: persona.nombre,
+                }
+              })
+            }
+          })
+        }
+      })
     });
 
     } catch (error) {

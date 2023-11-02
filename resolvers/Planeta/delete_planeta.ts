@@ -11,6 +11,7 @@ import { Request, Response } from "npm:express@4.18.2"; // importo los tipos de 
 // import xxx from "./db/xxx.ts";
 
 import PlanetaModel from "../../db/planeta.ts";  // Importo el modelo de la base de datos
+import PersonaModel from "../../db/persona.ts";  // Importo el modelo de la base de datos
                                                 // PlantillaModelType es el tipo de dato que devuelve el import
 
 const delete_planeta = async (req: Request, res: Response) => { // async es para que la funcion sea asincrona
@@ -27,7 +28,18 @@ const delete_planeta = async (req: Request, res: Response) => { // async es para
       return; // Corto la ejecucion de la funcion
     }
 
-    res.status(200).send("planeta deleted"); // Si se ha borrado correctamente, devuelvo un mensaje de que se ha borrado correctamente
+    // Obtengo los IDs de las personas relacionadas con el planeta
+    const personasIds = planeta.id_personas;
+
+    // Borro las personas relacionadas con el planeta
+    await personasIds.forEach(async (personaId) => {
+      await PersonaModel.findByIdAndDelete(personaId).exec();
+    });
+
+    // Eliminamos el planeta después de eliminar las personas relacionadas
+    await PlanetaModel.findByIdAndDelete(id).exec();
+
+    res.status(200).send("planeta and the personas asociated with planeta ",id,"deleted"); // Si se ha borrado correctamente, devuelvo un mensaje de que se ha borrado correctamente
 
     } catch (error) {
 

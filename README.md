@@ -8,64 +8,100 @@
 
 Obtener información de la TARDIS con un ID específico. (Navegador/Postman)
 
-- **GET**: /api/get_tardis/:id 
+- **GET**: ```/api/get_tardis/:id```
 
 Crear una nueva TARDIS. (POSTMAN -> Body -> raw -> JSON)
 
-- **POST**: /api/post_tardis
+- **POST**: ```/api/post_tardis```
 
 Actualizar información de una TARDIS existente. (POSTMAN -> Body -> raw -> JSON)
 
-- **PUT**: /api/update_tardis/:id 
+- **PUT**: ```/api/update_tardis/:id```
 
-Borrar una TARDIS específica. (Navegador/Postman)
+Borrar una TARDIS específica con todas sus dimensiones. (Navegador/Postman)
 
-- **DELETE**: /api/delete_tardis/:id 
+- **DELETE**: ```/api/delete_tardis/:id``` 
+
+*BODY*
+```json
+{
+    "camuflaje": "Verde",
+    "numero_regeneracion": 33,
+    "ano": 1999,
+    "dimensiones" : ["id_dimension_1","id_dimension_2","id_dimension_3"] // Si los ids no son de mongo devuelve error
+}
+```	
 
 ### Dimensiones
 
 Obtener información de una Dimensión con un ID específico. (Navegador/Postman)
-- **GET**: /api/get_dimension/:id
+
+- **GET**: ```/api/get_dimension/:id```
 
 Crear una nueva Dimensión. (POSTMAN -> Body -> raw -> JSON)
 
-- **POST**: /api/post_dimension
+- **POST**: ```/api/post_dimension```
 
 Actualizar información de una Dimensión existente. (POSTMAN -> Body -> raw -> JSON)
-- **PUT**: /api/update_dimension/:id 
 
-Borrar una Dimensión específica. (Navegador/Postman)
-- **DELETE**: /api/delete_dimension/:id 
+- **PUT**: ```/api/update_dimension/:id``` 
+
+Borrar una Dimensión específica con todos sus planetas. (Navegador/Postman)
+
+- **DELETE**: ```/api/delete_dimension/:id``` 
+
+*BODY*
+```json
+{
+    "planetas": ["id_planeta_1", "id_planeta_2", "id_planeta_3"] // Si los ids no son de mongo devuelve error
+}
+```	
 
 ### Planetas
 
 Obtener información de un Planeta con un ID específico. (Navegador/Postman)
-- **GET**: /api/get_planeta/:id
+
+- **GET**: ```/api/get_planeta/:id```
 
 Crear un nuevo Planeta. (POSTMAN -> Body -> raw -> JSON)
-- **POST**: /api/post_planeta
+
+- **POST**: ```/api/post_planeta```
 
 Actualizar información de un Planeta existente. (POSTMAN -> Body -> raw -> JSON)
-- **PUT**: /api/update_planeta/:id
 
-Borrar un Planeta específico. (Navegador/Postman)
-- **DELETE**: /api/delete_planeta/:id 
+- **PUT**: ```/api/update_planeta/:id```
 
+Borrar un Planeta específico con todas sus personas. (Navegador/Postman)
+
+- **DELETE**: ```/api/delete_planeta/:id``` 
+
+*BODY*
+```json
+{
+  "personas": ["id_persona_1", "id_persona_2", "id_persona_3"] // Si los ids no son de mongo devuelve error
+}
+```	
 
 ### Personas
 
 Obtener información de una Persona con un ID específico. (Navegador/Postman)
-- **GET**: /api/get_persona/:id
+- **GET**: ```/api/get_persona/:id```
 
 Crear una nueva Persona. (POSTMAN -> Body -> raw -> JSON)
-- **POST**: /api/post_persona
+- **POST**: ```/api/post_persona```
 
 Actualizar información de una Persona existente. (POSTMAN -> Body -> raw -> JSON)
-- **PUT**: /api/update_persona/:id 
+- **PUT**: ```/api/update_persona/:id``` 
 
 Borrar una Persona específica. (Navegador/Postman)
-- **DELETE**: /api/delete_persona/:id 
+- **DELETE**: ```/api/delete_persona/:id``` 
 
+*BODY*
+```json
+{
+    "nombre": "nombre_persona"
+}
+```	
 
 ----
 # Enunciado

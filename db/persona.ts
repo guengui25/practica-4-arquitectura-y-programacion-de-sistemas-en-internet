@@ -25,6 +25,6 @@ En otras palabras, este tipo representa un documento de persona sin el campo "id
 En resumen, "PersonModelType" representa el modelo de datos de una persona en la base de datos, excluyendo el campo "id".
 */
 
-export default mongoose.model<PersonaModelType>("Personas", PersonaSchema); //Exporto el modelo de datos de la plantilla en la base de datos
+export default mongoose.model<PersonaModelType>("personas", PersonaSchema); //Exporto el modelo de datos de la plantilla en la base de datos
 
 //Se crea un modelo de datos llamado "plantilla_tipo" que está vinculado al esquema "plantillaSchema" y utiliza el tipo "PlantillaModelType" para definir la estructura de los documentos en la colección.
