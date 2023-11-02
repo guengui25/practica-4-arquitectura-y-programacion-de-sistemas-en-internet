@@ -33,7 +33,7 @@ const delete_dimension = async (req: Request, res: Response) => { // async es pa
     // Obtengo los IDs de los planetas relacionados con la dimension
     const planetasIds = dimension.id_planetas;
 
-    if(planetasIds.length !== 0){
+    if(planetasIds !== null){
     // Espero a que todo se borre antes de continuar
     // https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Promise/all
       await Promise.all(planetasIds.map(async (planetaId) => {
@@ -41,7 +41,7 @@ const delete_dimension = async (req: Request, res: Response) => { // async es pa
         const planeta = await PlanetaModel.findByIdAndDelete(planetaId).exec();
         const personasIds = planeta.id_personas;
       
-          if(personasIds.length !== 0){
+          if(personasIds !== null){
             await Promise.all(personasIds.map(async (personaId) => {
               await PersonaModel.findByIdAndDelete(personaId).exec();
             }));

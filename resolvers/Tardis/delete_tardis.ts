@@ -36,18 +36,18 @@ const delete_tardis = async (req: Request, res: Response) => { // async es para 
     // Espero a que todo se borre antes de continuar
     // https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Promise/all
 
-    if(dimensionesIds.length !== 0){
+    if(dimensionesIds !== null){
       await Promise.all(dimensionesIds.map(async (dimensionId) => {
         const dimension = await DimensionModel.findByIdAndDelete(dimensionId).exec();
         const planetasIds = dimension.id_planetas;
 
-        if(planetasIds.length !== 0){
+        if(planetasIds !== null){
           await Promise.all(planetasIds.map(async (planetaId) => {
             // Obten los IDs de las personas relacionadas con el planeta
             const planeta = await PlanetaModel.findByIdAndDelete(planetaId).exec();
             const personasIds = planeta.id_personas;
           
-            if(personasIds.length !== 0){
+            if(personasIds !== null){
               // Itera a través de los IDs de las personas y elimina cada una
               await Promise.all(personasIds.map(async (personaId) => {
                 await PersonaModel.findByIdAndDelete(personaId).exec();
