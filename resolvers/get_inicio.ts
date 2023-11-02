@@ -17,17 +17,64 @@ const get_inicio = async (req: Request, res: Response) => { // async es para que
     try {
         const json_tardis = {
             title: "Tardis Data",
-            data: await TardisModel.find().populate({path:"id_dimensiones",populate:{path:"id_planetas",populate:{path:"id_personas"}}}).exec()
+            data: (await TardisModel.find().populate({path:"id_dimensiones",populate:{path:"id_planetas",populate:{path:"id_personas"}}}).exec()).map((tardis) => {
+                return {
+                    id: tardis._id.toString(),
+                    camuflaje: tardis.camuflaje,
+                    ano: tardis.ano,
+                    dimensiones: tardis.id_dimensiones.map(dimension => {
+                      return {
+                        id: dimension._id.toString(),
+                        planetas: dimension.id_planetas.map(planeta => { 
+                          return {
+                            id: planeta._id.toString(),
+                            personas: planeta.id_personas.map(persona => {
+                              return {
+                                id: persona._id.toString(),
+                                nombre: persona.nombre,
+                              }
+                            })
+                          }
+                        })
+                      }
+                    })
+                }
+            })
         };
 
         const json_dimensiones = {
             title: "Dimensiones Data",
-            data: await DimensionesModel.find().populate({path:"id_planetas",populate:{path:"id_personas"}}).exec()
+            data: (await DimensionesModel.find().populate({path:"id_planetas",populate:{path:"id_personas"}}).exec()).map((dimension) => {
+             return {      
+                id: dimension._id.toString(),
+                planetas: dimension.id_planetas.map(planeta => { 
+                  return {
+                    id: planeta._id.toString(),
+                    personas: planeta.id_personas.map(persona => {
+                      return {
+                        id: persona._id.toString(),
+                        nombre: persona.nombre,
+                      }
+                    })
+                  }
+                })
+            }
+            })
         };
 
         const json_planetas = {
             title: "Planetas Data",
-            data: await PlanetasModel.find().populate({path:"id_personas"}).exec()
+            data: (await PlanetasModel.find().populate({path:"id_personas"}).exec()).map((planeta) => {
+                return {
+                id: planeta._id.toString(),
+                personas: planeta.id_personas.map(persona => {
+                  return {
+                    id: persona._id.toString(),
+                    nombre: persona.nombre
+                  }
+            })
+            }
+        })
         };
 
         const json_personas = {
