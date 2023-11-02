@@ -126,10 +126,12 @@ const get_inicio = async (req: Request, res: Response) => { // async es para que
                 margin: 20px auto;
                 width: 80%;
             }
-            pre {
+            .code-container {
                 background-color: #f5f5f5;
                 padding: 10px;
                 border: 1px solid #ddd;
+                text-align: left;
+                white-space: pre-wrap;
             }
         </style>
     </head>
@@ -138,17 +140,18 @@ const get_inicio = async (req: Request, res: Response) => { // async es para que
             <h1>API DOCTOR WHO - PRÁCTICA 4</h1>
             <p>Desarrollado por Alejandro Riego V.</p>
             <p>Consultar <a href="https://github.com/guengui25/practica-4-arquitectura-y-programacion-de-sistemas-en-internet" target="_blank">repositorio en GitHub</a></p>
+
             <h2>${json_tardis.title}</h2>
-            <pre>${JSON.stringify(json_tardis.data, null, 2)}</pre>
+            <div class="code-container"><code>${JSON.stringify(json_tardis.data, null, 2)}</code></div>
 
             <h2>${json_dimensiones.title}</h2>
-            <pre>${JSON.stringify(json_dimensiones.data, null, 2)}</pre>
+            <div class="code-container"><code>${JSON.stringify(json_dimensiones.data, null, 2)}</code></div>
 
             <h2>${json_planetas.title}</h2>
-            <pre>${JSON.stringify(json_planetas.data, null, 2)}</pre>
+            <div class="code-container"><code>${JSON.stringify(json_planetas.data, null, 2)}</code></div>
 
             <h2>${json_personas.title}</h2>
-            <pre>${JSON.stringify(json_personas.data, null, 2)}</pre>
+            <div class="code-container"><code>${JSON.stringify(json_personas.data, null, 2)}</code></div>
         </div>
     </body>
     </html>
